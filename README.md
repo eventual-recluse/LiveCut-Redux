@@ -22,7 +22,7 @@ See [https://web.archive.org/web/20071021014423/http://mdsp.smartelectronix.com/
 
 First clone the repository:
 ```
-git clone --recursive https://github.com/eventual-recluse/LiveCut.git
+git clone --recursive https://github.com/eventual-recluse/LiveCut-Redux.git
 cd LiveCut
 ```
 
