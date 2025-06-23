@@ -63,10 +63,10 @@ jobs:
 
       - name: Show Directory
         run: |
-          ls -l ./build/LIVECUTREDUX_artefacts/Release/VST3
+          ls -l ./build/LIVECUTREDUX_artefacts/Release
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ./build/LIVECUTREDUX_artefacts/Release/VST3
+          path: ./build/LIVECUTREDUX_artefacts/Release
           name: LiveCutRedux-v0.0.1-macos-latest-release
