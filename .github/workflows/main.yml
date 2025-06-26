@@ -22,6 +22,10 @@ jobs:
       - name: Show Directory
         run: |
           ls -l ./build/LIVECUTREDUX_artefacts/Release
+          
+      - name: Build Cleanup
+        run: |
+          rm ./build/LIVECUTREDUX_artefacts/Release/libLiveCut-Redux_SharedCode.a
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -43,6 +47,14 @@ jobs:
       - name: Show Directory
         run: |
           ls -l ./build/LIVECUTREDUX_artefacts/Release
+          
+      - name: Build Cleanup
+        run: |
+          rm ./build/LIVECUTREDUX_artefacts/Release/LiveCut-Redux_SharedCode.lib
+          rm ./build/LIVECUTREDUX_artefacts/Release/VST3/LiveCut-Redux.exp
+          rm ./build/LIVECUTREDUX_artefacts/Release/VST3/LiveCut-Redux.lib
+          rm ./build/LIVECUTREDUX_artefacts/Release/CLAP/LiveCut-Redux.exp
+          rm ./build/LIVECUTREDUX_artefacts/Release/CLAP/LiveCut-Redux.lib
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -64,6 +76,10 @@ jobs:
       - name: Show Directory
         run: |
           ls -l ./build/LIVECUTREDUX_artefacts/Release
+          
+      - name: Build Cleanup
+        run: |
+          rm ./build/LIVECUTREDUX_artefacts/Release/libLiveCut-Redux_SharedCode.a
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
