@@ -2,7 +2,7 @@ set(PROJECT_NAME LiveCut-Redux)
 
 cmake_minimum_required(VERSION 3.22)
 
-project(LIVECUTREDUX VERSION 0.0.1)
+project(LIVECUTREDUX VERSION 0.0.2)
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
 # find_package(JUCE CONFIG REQUIRED)        # If you've installed JUCE to your system
@@ -13,7 +13,7 @@ add_subdirectory(libs/clap-juce-extensions EXCLUDE_FROM_ALL)
 set(FORMATS VST3)
 
 juce_add_plugin(${PROJECT_NAME}
-    VERSION 0.0.1                               # Set this if the plugin version is different to the project version
+    VERSION 0.0.2                               # Set this if the plugin version is different to the project version
     # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
     # ICON_SMALL ...
     COMPANY_NAME "eventual-recluse"             # Specify the name of the plugin's author

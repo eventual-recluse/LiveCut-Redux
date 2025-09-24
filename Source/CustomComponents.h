@@ -2,6 +2,13 @@
 #define CUSTOMCOMPONENTS_H
 
 #include <JuceHeader.h>
+#include "CustomComponentImages.h"
+
+template <class T>
+T limitValue (const T x, const T min, const T max)
+{
+    return (x < min ? min : (x > max ? max : x));
+}
 
 class CustomLookAndFeel_V3 : public juce::LookAndFeel_V3
 {
@@ -16,67 +23,9 @@ public:
                                                  float /*maxSliderPos*/,
                                                  const Slider::SliderStyle /*style*/, Slider& slider) override
     {
-        const float sliderRadius = (float) (getSliderThumbRadius (slider) - 2);
-
-        const Colour trackColour (slider.findColour (Slider::trackColourId));
-        const Colour gradCol1 (trackColour.overlaidWith (Colour (slider.isEnabled() ? 0x13000000 : 0x09000000)));
-        const Colour gradCol2 (trackColour.overlaidWith (Colour (0x06000000)));
-        Path indent;
-
-        if (slider.isHorizontal())
-        {
-            auto iy = (float) y + (float) height * 0.5f - sliderRadius;
-
-            g.setGradientFill (ColourGradient::vertical (gradCol1, iy, gradCol2, iy + sliderRadius * 2.0f));
-
-            indent.addRoundedRectangle ((float) x - sliderRadius, iy, (float) width + sliderRadius * 2.0f, sliderRadius * 2.0f, 8.0f);
-        }
-        else
-        {
-            auto ix = (float) x + (float) width * 0.5f - sliderRadius * 0.5f;
-
-            g.setGradientFill (ColourGradient::horizontal (gradCol1, ix, gradCol2, ix + sliderRadius));
-
-            indent.addRoundedRectangle (ix, (float) y - sliderRadius * 0.5f, sliderRadius, (float) height + sliderRadius, 5.0f);
-        }
-
-        g.fillPath (indent);
-
-        g.setColour (trackColour.contrasting (1.0f));
-        g.strokePath (indent, PathStrokeType (0.5f));
+        // Don't draw anything! This method is overridden so that the slider background is not drawn here.
+        // NOTE! For the sliders, we retain and display only the thumb and the text box from the JUCE slider
     }
-};
-
-class CustomLookAndFeel_V4 : public juce::LookAndFeel_V4
-{
-public:
-    CustomLookAndFeel_V4()
-    {
-    }
-    void drawButtonText (Graphics& g, TextButton& button,
-                                     bool /*shouldDrawButtonAsHighlighted*/, bool /*shouldDrawButtonAsDown*/) override
-    {
-        //Font font (getTextButtonFont (button, button.getHeight()));
-        Font font (withDefaultMetrics (FontOptions { jmin (16.0f, (float) button.getHeight() * 0.8f) }));
-        g.setFont (font);
-        g.setColour (button.findColour (button.getToggleState() ? TextButton::textColourOnId
-                                                                : TextButton::textColourOffId)
-                           .withMultipliedAlpha (button.isEnabled() ? 1.0f : 0.5f));
-
-        const int yIndent = jmin (4, button.proportionOfHeight (0.3f));
-        const int cornerSize = jmin (button.getHeight(), button.getWidth()) / 2;
-
-        const int fontHeight = roundToInt (font.getHeight() * 0.6f);
-        const int leftIndent  = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnLeft() ? 4 : 2));
-        const int rightIndent = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnRight() ? 4 : 2));
-        const int textWidth = button.getWidth() - leftIndent - rightIndent;
-
-        if (textWidth > 0)
-            g.drawFittedText (button.getButtonText(),
-                              leftIndent, yIndent, textWidth, button.getHeight() - yIndent * 2,
-                              Justification::centred, 2);
-    }
-  
 };
 
 struct CustomSlider : public juce::Component
@@ -99,50 +48,94 @@ struct CustomSlider : public juce::Component
     juce::String unitText;
     juce::Font font { withDefaultMetrics (juce::FontOptions() ) };
     
+    std::unique_ptr<juce::Drawable> sliderBackgroundAndTrack;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomSlider)
 };
 
 struct CustomStepper : public juce::Component
+                    , public juce::Slider::Listener
+                    , public juce::Timer
 {
     CustomStepper();
     ~CustomStepper();
     
-    void paint(Graphics& g) override;
+    enum StepperStatus
+    {
+        NORMAL = 0,
+        DOWN_ON = 1,
+        UP_ON = 2
+    };
+        
+    void mouseDown(const MouseEvent& event) override;
+    void mouseUp(const MouseEvent& event) override;
+    void mouseDrag(const MouseEvent& event) override;
+    void mouseWheelMove(const MouseEvent &event, const MouseWheelDetails &wheel) override;
     void resized() override;
+    void paint(Graphics& g) override;
+    void setScale(const float newScale);
+    void sliderValueChanged(Slider* slider) override;
     
-    void setScale(const float newScaleFactor);
-    void setTitle(const juce::String &newTitle);
+    void setTitle(const juce::String &title);
+    void setUnitText(const juce::String &title);
+    void setChoices(const juce::StringArray &newChoices);
     void setFont(const juce::Font &newFont);
+    void setDisplayChoiceText(const bool ch);
+    void increment(const int inc);
+    void timerCallback() override;
+        
+    uint32_t status;
+    double valueOnMouseDown;
+    bool dragging;
     
-    float scaleFactor{1.0f};
-
     juce::Slider xSlider;
+    std::unique_ptr<juce::Drawable> stepperImg;
+    std::unique_ptr<juce::Drawable> downOnImg;
+    std::unique_ptr<juce::Drawable> upOnImg;
+    
+    juce::StringArray choices;
+    float scaleFactor;
     juce::String sliderTitle;
+    juce::String unitText;
+    
+    bool displayChoiceText;
+    
     juce::Font font { withDefaultMetrics (juce::FontOptions() ) };
-   
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomStepper)
 };
 
 struct CustomButton : public juce::Component
+                    , public juce::Button::Listener
 {
     CustomButton();
     ~CustomButton();
     
-    void paint(Graphics& g) override;
+    void mouseDown(const MouseEvent& event) override;
+    void mouseUp(const MouseEvent& event) override;
+    void mouseWheelMove(const MouseEvent &event, const MouseWheelDetails &wheel) override;
     void resized() override;
+    void paint(Graphics& g) override;
+    void setScale(const float newScale);
+    void buttonStateChanged(Button* btn) override;
+    void buttonClicked(Button* btn) override;
     
-    void setScale(const float newScaleFactor);
-    void setTitle(const juce::String &newTitle);
+    void setTitle(const juce::String &title);
     void setFont(const juce::Font &newFont);
+    void toggle();
+        
+    std::unique_ptr<juce::Drawable> offImg;
+    std::unique_ptr<juce::Drawable> onImg;
     
-    void buttonClicked();
+    bool switchWasPressed;
     
-    float scaleFactor{1.0f};
-
+    float scaleFactor;
+    juce::StringArray choices;
     juce::TextButton button;
-    juce::String buttonTitle;
-    juce::Font font { withDefaultMetrics (juce::FontOptions() ) };
+    juce::String switchTitle;
     
+    juce::Font font { withDefaultMetrics (juce::FontOptions() ) };
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomButton)
 };
 

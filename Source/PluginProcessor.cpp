@@ -262,7 +262,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout LiveCutAudioProcessor::addPa
 
     paramLayout.add(std::make_unique<juce::AudioParameterChoice>("cutproc", "CutProc", juce::StringArray {"CUTPROC11", "WARPCUT", "SQPUSHER"}, 0));
     paramLayout.add(std::make_unique<juce::AudioParameterChoice>("subdiv", "SubDiv", juce::StringArray {"6", "8", "12", "16", "18", "24", "32"}, 1));
-    paramLayout.add(std::make_unique<juce::AudioParameterFloat>("fade", "Fade", juce::NormalisableRange<float>(0.0f, 100.0f, 0.0000001f, 0.231378f), 0.0f)); // LOGARITHMIC - NOTE 0.231378f is the skew factor, which sets 5.0 as the slider middle value.
+    paramLayout.add(std::make_unique<juce::AudioParameterFloat>("fade", "Fade", juce::NormalisableRange<float>(0.0f, 100.0f, 0.00001f, 0.231378f), 0.0f)); // LOGARITHMIC - NOTE 0.231378f is the skew factor, which sets 5.0 as the slider middle value.
     paramLayout.add(std::make_unique<juce::AudioParameterFloat>("minamp", "Min Amp", juce::NormalisableRange<float>(0.0f, 1.0f, 0.001f), 1.0f));
     paramLayout.add(std::make_unique<juce::AudioParameterFloat>("maxamp", "Max Amp", juce::NormalisableRange<float>(0.0f, 1.0f, 0.001f), 1.0f));
     paramLayout.add(std::make_unique<juce::AudioParameterFloat>("minpan", "Min Pan", juce::NormalisableRange<float>(-1.0f, 1.0f, 0.001f), -0.2f));

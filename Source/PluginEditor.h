@@ -44,12 +44,6 @@ private:
     const juce::Typeface::Ptr varelaTypeface = juce::Typeface::createSystemTypefaceFor(BinaryData::VarelaRegular_ttf, BinaryData::VarelaRegular_ttfSize);
 
     CustomLookAndFeel_V3 sliderLookAndFeel;
-    CustomLookAndFeel_V4 stepperLookAndFeel;
-    juce::LookAndFeel_V3 switchLookAndFeel;
-    
-    LookAndFeel_V4::ColourScheme stepperColourScheme{ 0xffefefef, 0xfffaebd3, 0xffffffff,
-             0xff696969, 0xff000000, 0xffa9a9a9,
-             0xffffffff, 0xff42a2c8, 0xff000000 };
 
     CustomStepper cutprocStepper;
     CustomStepper subdivStepper;

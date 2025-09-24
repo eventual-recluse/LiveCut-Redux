@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./build/LIVECUTREDUX_artefacts/Release
-          name: LiveCut-Redux-v0.0.1-ubuntu-latest-release
+          name: LiveCut-Redux-v0.0.2-ubuntu-latest-release
 
   windows:
     runs-on: windows-latest
@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./build/LIVECUTREDUX_artefacts/Release
-          name: LiveCut-Redux-v0.0.1-windows-latest-release
+          name: LiveCut-Redux-v0.0.2-windows-latest-release
 
   macos:
     runs-on: macos-latest
@@ -85,4 +85,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./build/LIVECUTREDUX_artefacts/Release
-          name: LiveCutRedux-v0.0.1-macos-latest-release
+          name: LiveCutRedux-v0.0.2-macos-latest-release

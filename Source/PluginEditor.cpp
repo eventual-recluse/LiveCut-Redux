@@ -17,18 +17,18 @@ LiveCutAudioProcessorEditor::LiveCutAudioProcessorEditor (LiveCutAudioProcessor&
     // editor's size to whatever you need it to be.
     setSize (2100 * scaleFactor, 1400 * scaleFactor);
     
-    stepperLookAndFeel.setColourScheme(stepperColourScheme);
-    
-    cutprocStepper.xSlider.setLookAndFeel(&stepperLookAndFeel);
     cutprocStepper.setTitle("CUTPROC");
     cutprocStepper.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
     cutprocStepper.setScale(scaleFactor);
+    cutprocStepper.setDisplayChoiceText(true);
+    cutprocStepper.setChoices(juce::StringArray {"CUTPROC11", "WARPCUT", "SQPUSHER"});
     addAndMakeVisible(&cutprocStepper);
     
-    subdivStepper.xSlider.setLookAndFeel(&stepperLookAndFeel);
     subdivStepper.setTitle("SUBDIV");
     subdivStepper.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
     subdivStepper.setScale(scaleFactor);
+    subdivStepper.setDisplayChoiceText(true);
+    subdivStepper.setChoices(juce::StringArray {"6", "8", "12", "16", "18", "24", "32"});
     addAndMakeVisible(&subdivStepper);
     
     fadeSlider.xSlider.setLookAndFeel(&sliderLookAndFeel);
@@ -88,27 +88,31 @@ LiveCutAudioProcessorEditor::LiveCutAudioProcessorEditor (LiveCutAudioProcessor&
     filldutySlider.setTitle("FILLDUTY");
     addAndMakeVisible(&filldutySlider);
     
-    maxphrsStepper.xSlider.setLookAndFeel(&stepperLookAndFeel);
     maxphrsStepper.setScale(scaleFactor);
     maxphrsStepper.setTitle("MAXPHRS");
     maxphrsStepper.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
+    maxphrsStepper.setUnitText("BAR");
+    maxphrsStepper.setDisplayChoiceText(false);
     addAndMakeVisible(&maxphrsStepper);
     
-    minphrsStepper.xSlider.setLookAndFeel(&stepperLookAndFeel);
     minphrsStepper.setTitle("MINPHRS");
     minphrsStepper.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
     minphrsStepper.setScale(scaleFactor);
+    minphrsStepper.setUnitText("BAR");
+    minphrsStepper.setDisplayChoiceText(false);
     addAndMakeVisible(&minphrsStepper);
     
-    maxrepStepper.xSlider.setLookAndFeel(&stepperLookAndFeel);
     maxrepStepper.setTitle("MAXREP");
     maxrepStepper.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
     maxrepStepper.setScale(scaleFactor);
+    maxrepStepper.setUnitText("REP");
+    maxrepStepper.setDisplayChoiceText(false);
     addAndMakeVisible(&maxrepStepper);
     
-    minrepStepper.xSlider.setLookAndFeel(&stepperLookAndFeel);
     minrepStepper.setTitle("MINREP");
     minrepStepper.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
+    minrepStepper.setUnitText("REP");
+    minrepStepper.setDisplayChoiceText(false);
     minrepStepper.setScale(scaleFactor);
     addAndMakeVisible(&minrepStepper);
     
@@ -154,7 +158,6 @@ LiveCutAudioProcessorEditor::LiveCutAudioProcessorEditor (LiveCutAudioProcessor&
     activitySlider.setTitle("ACTIVITY");
     addAndMakeVisible(&activitySlider);
     
-    crusherSwitch.button.setLookAndFeel(&switchLookAndFeel);
     crusherSwitch.setTitle("CRUSHER");
     crusherSwitch.setScale(scaleFactor);
     crusherSwitch.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
@@ -188,16 +191,16 @@ LiveCutAudioProcessorEditor::LiveCutAudioProcessorEditor (LiveCutAudioProcessor&
     maxfreqSlider.setUnitText("HZ");
     addAndMakeVisible(&maxfreqSlider); // LOGARITHMIC
     
-    combSwitch.button.setLookAndFeel(&switchLookAndFeel);
     combSwitch.setTitle("COMB");
     combSwitch.setScale(scaleFactor);
     combSwitch.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
     addAndMakeVisible(&combSwitch);
     
-    typeStepper.xSlider.setLookAndFeel(&stepperLookAndFeel);
     typeStepper.setTitle("TYPE");
     typeStepper.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
     typeStepper.setScale(scaleFactor);
+    typeStepper.setDisplayChoiceText(true);
+    typeStepper.setChoices(juce::StringArray {"FEEDFWD", "FEEDBACK"});
     addAndMakeVisible(&typeStepper);
     
     feedbackSlider.xSlider.setLookAndFeel(&sliderLookAndFeel);
@@ -220,10 +223,10 @@ LiveCutAudioProcessorEditor::LiveCutAudioProcessorEditor (LiveCutAudioProcessor&
     maxdelaySlider.setUnitText("MS");
     addAndMakeVisible(&maxdelaySlider);
     
-    seedStepper.xSlider.setLookAndFeel(&stepperLookAndFeel);
     seedStepper.setTitle("SEED");
     seedStepper.setFont(juce::Font ( withDefaultMetrics (juce::FontOptions { varelaTypeface }) ));
     seedStepper.setScale(scaleFactor);
+    seedStepper.setDisplayChoiceText(false);
     addAndMakeVisible(&seedStepper);
     
     
@@ -361,9 +364,9 @@ void LiveCutAudioProcessorEditor::resized()
     
     int smallStep = 80 * scaleFactor;
     int largeStep = 115 * scaleFactor;
-    int stepperMargin = 98 * scaleFactor;
+    int stepperMargin = 110 * scaleFactor;
     int sliderMargin = 80 * scaleFactor;
-    int switchMargin = 220 * scaleFactor;
+    int switchMargin = 140 * scaleFactor;
     int labelTopStep = 100 * scaleFactor;
     int labelBottomStep = 65 * scaleFactor;
     
