@@ -184,17 +184,17 @@ void CustomStepper::paint(Graphics& g)
     g.setColour(juce::Colours::black);
     g.drawText(sliderTitle, 0 * scaleFactor, 0 * scaleFactor, 175 * scaleFactor, 59 * scaleFactor, juce::Justification::centred, false);
     
-    g.setFont(font.withHeight(30 * scaleFactor));
+    //g.setFont(font.withHeight(30 * scaleFactor));
     if (displayChoiceText && !choices.isEmpty())
-        g.drawText(choices[xSlider.getValue()], 290 * scaleFactor, 0 * scaleFactor, 175 * scaleFactor, 59 * scaleFactor, juce::Justification::centred, false);
+        g.drawText(choices[xSlider.getValue()], 285 * scaleFactor, 0 * scaleFactor, 175 * scaleFactor, 59 * scaleFactor, juce::Justification::centred, false);
     else
-        g.drawText(juce::String(xSlider.getValue()) + unitText, 290 * scaleFactor, 0 * scaleFactor, 175 * scaleFactor, 59 * scaleFactor, juce::Justification::centred, false);
+        g.drawText(juce::String(xSlider.getValue()) + unitText, 285 * scaleFactor, 0 * scaleFactor, 175 * scaleFactor, 59 * scaleFactor, juce::Justification::centred, false);
     
     // Show title text area (for calibration)
     //g.drawRect(juce::Rectangle<float>(0 * scaleFactor, 0 * scaleFactor, 175 * scaleFactor, 59 * scaleFactor));
     
     // Show unit text area (for calibration)
-    //g.drawRect(juce::Rectangle<float>(290 * scaleFactor, 0 * scaleFactor, 175 * scaleFactor, 59 * scaleFactor));
+    //g.drawRect(juce::Rectangle<float>(285 * scaleFactor, 0 * scaleFactor, 175 * scaleFactor, 59 * scaleFactor));
     
     // Show button ellipses (for calibrating the widget)
     //g.fillEllipse(203 * scaleFactor - 25* scaleFactor, 30 * scaleFactor - 25* scaleFactor, 50.0f* scaleFactor, 50.0f* scaleFactor);
@@ -347,13 +347,13 @@ void CustomButton::paint(Graphics& g)
     g.setColour(juce::Colours::black);
     g.drawText(switchTitle, 0 * scaleFactor, 0 * scaleFactor, 180 * scaleFactor, 59 * scaleFactor, juce::Justification::centred, false);
     
-    g.setFont(font.withHeight(30 * scaleFactor));
-    g.drawText(choices[button.getToggleState()], 230 * scaleFactor, 0 * scaleFactor, 180 * scaleFactor, 59 * scaleFactor, juce::Justification::centred, false);
+    //g.setFont(font.withHeight(30 * scaleFactor));
+    g.drawText(choices[button.getToggleState()], 227 * scaleFactor, 0 * scaleFactor, 180 * scaleFactor, 59 * scaleFactor, juce::Justification::centred, false);
     
     // Show title text box (for calibration)
     //g.drawRect(juce::Rectangle<float>(0 * scaleFactor, 0 * scaleFactor, 180 * scaleFactor, 59 * scaleFactor));
     // Show On/Off text box (for calibration)
-    //g.drawRect(juce::Rectangle<float>(230 * scaleFactor, 0 * scaleFactor, 180 * scaleFactor, 59 * scaleFactor));
+    //g.drawRect(juce::Rectangle<float>(227 * scaleFactor, 0 * scaleFactor, 180 * scaleFactor, 59 * scaleFactor));
     // Show button ellipse (for calibration)
     //g.fillEllipse(206 * scaleFactor - 25* scaleFactor, 30 * scaleFactor - 25* scaleFactor, 50.0f* scaleFactor, 50.0f* scaleFactor);
     
